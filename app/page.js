@@ -1,3 +1,8 @@
 export default function Home() {
-  return <h1>This is Home page</h1>;
+  console.log("Home page");
+  return (
+    <>
+      <h1>This is home page</h1>
+    </>
+  );
 }
