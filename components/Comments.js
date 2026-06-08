@@ -1,7 +1,12 @@
-// import { cookies } from "next/headers";
+"use client";
 
-export default async function Comments() {
-  // cookies();
-  // await new Promise((resolve) => setTimeout(resolve, 15000));
-  return <h2>This is comments page</h2>;
+export default function Comments() {
+  return (
+    <div>
+      <h2>This is comments page</h2>
+      {/* Hydration Error */}
+      {/* <h3>{Math.random()}</h3> */}
+      {/* <h3>{Date.now()}</h3> */}
+    </div>
+  );
 }
