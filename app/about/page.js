@@ -8,6 +8,8 @@ export const metadata = {
   title: "about",
 };
 
+// export const dynamic = "force-dynamic";
+
 export default function About() {
   console.log("About Page");
 
