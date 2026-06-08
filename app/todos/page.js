@@ -1,3 +1,5 @@
+// Api call in server component
+
 export default async function Todos() {
   const response = await fetch(
     "https://jsonplaceholder.typicode.com/todos?_limit=5",
