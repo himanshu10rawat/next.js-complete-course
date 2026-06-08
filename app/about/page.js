@@ -1,3 +1,4 @@
+import ClickMeButton from "@/components/ClickMeButton";
 import Comments from "@/components/Comments";
 import Likes from "@/components/Likes";
 import Loading from "@/components/Loading";
@@ -16,6 +17,7 @@ export default function About() {
   return (
     <>
       <h1>This is about page</h1>
+      <ClickMeButton />
       <Suspense fallback={<Loading>Views...</Loading>}>
         <Views />
       </Suspense>
