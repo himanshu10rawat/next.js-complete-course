@@ -57,6 +57,7 @@ header nav ul a {
 header nav ul a.active {
   color: rgb(125, 255, 134);
   border: 1px solid rgb(125, 255, 134);
+  background-color: rgba(125, 255, 134, 10%);
 }
 
 header nav ul a:hover {
