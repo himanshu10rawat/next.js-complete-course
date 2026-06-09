@@ -1,20 +1,30 @@
 // Api call in server component
 
-export default async function Todos() {
-  const response = await fetch(
-    "https://jsonplaceholder.typicode.com/todos?_limit=5",
-  );
+import SlowApi from "@/components/SlowApi";
+import TodosList from "@/components/TodosList";
+import { Suspense } from "react";
 
-  const todos = await response.json();
-
+export default function Todos() {
   return (
     <>
-      {todos.map(({ id, title, completed }) => (
-        <div key={id} style={{ display: "flex", gap: "0.5rem" }}>
-          <input type="checkbox" checked={completed} readOnly />
-          <p>{title}</p>
-        </div>
-      ))}
+      <h1>Todos</h1>
+      <Suspense
+        fallback={
+          <div className="todos-container">
+            {Array.from({ length: 5 }).map((_, index) => (
+              <li key={index} className="shimmer">
+                <div className="shimmer-checkbox"></div>
+                <div className="shimmer-text"></div>
+              </li>
+            ))}
+          </div>
+        }
+      >
+        <TodosList />
+      </Suspense>
+      <Suspense fallback={<h2>Slow Api Loading...</h2>}>
+        <SlowApi />
+      </Suspense>
     </>
   );
 }
