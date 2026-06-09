@@ -1,5 +1,6 @@
 import Header from "@/components/Header";
 import "./globals.css";
+import ThemeProvider from "@/context/ThemeProvider";
 
 export const metadata = {
   title: {
@@ -13,8 +14,10 @@ export default function RootLayout({ children }) {
   return (
     <html>
       <body>
-        <Header />
-        <div className="body-container">{children}</div>
+        <ThemeProvider>
+          <Header />
+          <div className="body-container">{children}</div>
+        </ThemeProvider>
       </body>
     </html>
   );

@@ -1,10 +1,12 @@
 "use client";
 
+import { useThemeContext } from "@/context/ThemeProvider";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 export default function Header() {
   const pathname = usePathname();
+  const { isDark, toggleTheme } = useThemeContext();
 
   return (
     <header className="header">
@@ -33,7 +35,9 @@ export default function Header() {
           </li>
         </ul>
       </nav>
-      <div className="theme-mode">Dark</div>
+      <button type="button" className="theme-mode" onClick={toggleTheme}>
+        {isDark ? "🌛" : "🌞"}
+      </button>
     </header>
   );
 }
