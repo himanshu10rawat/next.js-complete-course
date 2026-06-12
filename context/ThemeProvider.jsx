@@ -1,31 +1,47 @@
 "use client";
 
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useSyncExternalStore } from "react";
 
 const ThemeContext = createContext();
+const THEME_STORAGE_KEY = "dark";
+const THEME_CHANGE_EVENT = "theme-change";
+
+function getThemeSnapshot() {
+  return localStorage.getItem(THEME_STORAGE_KEY) === "true";
+}
+
+function getServerThemeSnapshot() {
+  return false;
+}
+
+function subscribeToTheme(callback) {
+  window.addEventListener("storage", callback);
+  window.addEventListener(THEME_CHANGE_EVENT, callback);
+
+  return () => {
+    window.removeEventListener("storage", callback);
+    window.removeEventListener(THEME_CHANGE_EVENT, callback);
+  };
+}
 
 export function useThemeContext() {
   return useContext(ThemeContext);
 }
 
 export default function ThemeProvider({ children }) {
-  const [isDark, setIsDark] = useState(() => {
-    if (typeof window !== "undefined")
-      return localStorage.getItem("dark") === "true";
-  });
+  const isDark = useSyncExternalStore(
+    subscribeToTheme,
+    getThemeSnapshot,
+    getServerThemeSnapshot
+  );
 
   function toggleTheme() {
-    setIsDark((prev) => !prev);
+    localStorage.setItem(THEME_STORAGE_KEY, String(!isDark));
+    window.dispatchEvent(new Event(THEME_CHANGE_EVENT));
   }
 
   useEffect(() => {
-    if (isDark) {
-      document.documentElement.classList.add("dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-    }
-
-    localStorage.setItem("dark", isDark);
+    document.documentElement.classList.toggle("dark", isDark);
   }, [isDark]);
 
   return (
